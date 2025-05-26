@@ -7,6 +7,37 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <script>
+        function checkDate() {
+            const now = new Date();
+            const month = now.getMonth(); // 0-11
+            const date = now.getDate();
+            
+            // Check if it's Christmas (December 25)
+            if (month === 11 && date === 25) {
+                window.location.href = 'christmas.html';
+                return;
+            }
+            
+            // Check if it's New Year's Day (January 1)
+            if (month === 0 && date === 1) {
+                // Stay on this page as it's already the New Year page
+                return;
+            }
+            
+            // Check if it's the week leading up to New Year's (December 25-31)
+            if (month === 11 && date > 25 && date <= 31) {
+                window.location.href = 'Tree.html';
+                return;
+            }
+            
+            // If it's none of the above, redirect to matias.nsfw
+            window.location.href = 'matias.nsfw';
+        }
+
+        // Run the check when the page loads
+        window.onload = checkDate;
+    </script>
     <style>
         :root {
             --primary-color: #4285f4;

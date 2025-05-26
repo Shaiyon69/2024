@@ -1,8 +1,37 @@
-# 🎆 New Year Celebration Page
+# 🎆 Holiday Celebration Pages
 
-A beautiful, interactive web page to celebrate the New Year with stunning fireworks animations, countdown timer, and festive effects.
+A collection of interactive web pages to celebrate Christmas and New Year with stunning animations, countdowns, and festive effects.
 
 ![New Year Celebration](preview.png)
+
+## 🎯 Smart Date Routing
+
+The website automatically directs visitors to different celebration pages based on the date:
+
+- 🎄 **December 25**: Christmas celebration page with snowfall animation
+- 🎋 **December 26-31**: New Year countdown page with simple fireworks
+- 🎆 **January 1**: Full New Year celebration with interactive fireworks
+- 🔄 **Other dates**: Redirects to matias.nsfw
+
+## 📄 Pages
+
+### christmas.html (December 25)
+- Beautiful Christmas-themed design
+- Falling snowflake animations
+- Festive colors and gradients
+- Holiday greetings message
+
+### Tree.html (December 26-31)
+- Simple fireworks animations
+- New Year countdown
+- YouTube video integration
+- Basic celebration effects
+
+### index.html (January 1)
+- Interactive particle-based fireworks
+- Multiple firework types (circles, hearts, spirals, starbursts)
+- Sound effects and music
+- Social sharing features
 
 ## ✨ Features
 
@@ -19,7 +48,7 @@ A beautiful, interactive web page to celebrate the New Year with stunning firewo
 
 ### 🎨 Visual Effects
 - Beautiful glassmorphism UI design
-- Falling snow animation
+- Falling snow animation (Christmas page)
 - Gradient text animations
 - Smooth transitions and hover effects
 - Responsive design for all devices
