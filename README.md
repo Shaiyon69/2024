@@ -181,12 +181,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Icons from various open-source projects
 - Font from Google Fonts (Poppins)
 
-## 📞 Contact
-
-Your Name - [@yourtwitter](https://twitter.com/yourtwitter) - email@example.com
-
-Project Link: [https://github.com/yourusername/new-year-celebration](https://github.com/yourusername/new-year-celebration)
-
 ---
 
 Made with ❤️ for the New Year celebration
