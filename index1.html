@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline of Us</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* --- RESET & BASE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: radial-gradient(circle at top, #1b2735 0%, #090a0f 100%);
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- BACKGROUND STARS --- */
+        .stars {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            background: transparent;
+            z-index: 0;
+        }
+
+        /* --- HEADER --- */
+        header {
+            text-align: center;
+            padding: 60px 20px 20px;
+            z-index: 10;
+            position: relative;
+        }
+
+        header h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            background: linear-gradient(to right, #4facfe 0%, #ff9a9e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #a0a0a0;
+            font-weight: 300;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        /* --- TIMELINE CONTAINER --- */
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px 0;
+            z-index: 10;
+        }
+
+        /* === THE CENTER LINE === */
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: linear-gradient(to bottom, #4facfe, #ff9a9e, #444);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            z-index: 1; 
+        }
+
+        /* --- TIMELINE ITEM --- */
+        .container {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            opacity: 0; 
+            animation: fadeInUp 0.8s ease forwards;
+            z-index: 10;
+        }
+
+        .container:nth-child(1) { animation-delay: 0.2s; }
+        .container:nth-child(2) { animation-delay: 0.4s; }
+        .container:nth-child(3) { animation-delay: 0.6s; }
+
+        .left { left: 0; }
+        .right { left: 50%; }
+
+        /* === THE CIRCLE (DOT) === */
+        .container::after {
+            content: '';
+            position: absolute;
+            width: 24px;   
+            height: 24px;
+            background-color: #1a1a1a;
+            border: 4px solid #fff;
+            border-radius: 50%;
+            top: 25px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .left::after { right: 0; transform: translateX(50%); }
+        .right::after { left: 0; transform: translateX(-50%); }
+
+        /* Colors */
+        .left.newyear::after { border-color: #4facfe; box-shadow: 0 0 15px #4facfe; }
+        .right.valentines::after { border-color: #ff9a9e; box-shadow: 0 0 15px #ff9a9e; }
+        .left.future::after { border-color: #555; }
+
+        /* --- THE CARD --- */
+        .content {
+            padding: 25px 30px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            position: relative;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            display: block;
+            color: white;
+            overflow: visible; /* Allows arrow to stick out */
+        }
+
+        /* HOVER EFFECTS - MOVES CARD & ARROW */
+        .content:hover {
+            transform: translateY(-5px) scale(1.02);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .content h2 { font-weight: 700; margin-bottom: 5px; font-size: 1.5rem; }
+        .content .date { font-size: 0.85rem; color: #ccc; margin-bottom: 10px; display: block; font-weight: 300; letter-spacing: 1px; }
+        .content p { font-size: 0.95rem; line-height: 1.5; color: #e0e0e0; }
+
+        .locked { pointer-events: none; filter: grayscale(100%); opacity: 0.5; }
+
+        /* === THE ARROWS (Attached to Content now) === */
+        
+        /* 1. Base Arrow Style */
+        .content::before {
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            top: 26px;
+            z-index: 1;
+            border: medium solid rgba(255, 255, 255, 0.05); /* Match Card BG */
+            transition: border-color 0.4s ease; /* Smooth color transition */
+        }
+
+        /* 2. Left Side Cards -> Arrow points RIGHT */
+        .left .content::before {
+            right: -20px; /* Push outside the box */
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent rgba(255, 255, 255, 0.05);
+        }
+
+        /* 3. Right Side Cards -> Arrow points LEFT */
+        .right .content::before {
+            left: -20px; /* Push outside the box */
+            border-width: 10px 10px 10px 0;
+            border-color: transparent rgba(255, 255, 255, 0.05) transparent transparent;
+        }
+
+        /* 4. Hover State: Lighten the arrow to match the card hover */
+        .left .content:hover::before {
+            border-color: transparent transparent transparent rgba(255, 255, 255, 0.1);
+        }
+        .right .content:hover::before {
+            border-color: transparent rgba(255, 255, 255, 0.1) transparent transparent;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- MOBILE ADJUSTMENTS --- */
+        @media screen and (max-width: 600px) {
+            .timeline::after { left: 30px; transform: none; }
+            .container { width: 100%; padding-left: 70px; padding-right: 25px; }
+            
+            /* Reset Dots */
+            .left::after, .right::after { 
+                left: 30px; right: auto; transform: translateX(-50%); 
+            }
+            
+            .right { left: 0%; }
+            header h1 { font-size: 2.5rem; }
+
+            /* Fix Arrows for Mobile (All point LEFT) */
+            /* We need to override the ".left" styles to look like ".right" styles */
+            .left .content::before, .right .content::before {
+                left: -20px;
+                right: auto;
+                border-width: 10px 10px 10px 0;
+                border-color: transparent rgba(255, 255, 255, 0.05) transparent transparent;
+            }
+
+            /* Fix Mobile Hover Colors */
+            .left .content:hover::before, .right .content:hover::before {
+                border-color: transparent rgba(255, 255, 255, 0.1) transparent transparent;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stars" id="stars"></div>
+
+    <header>
+        <h1>Charle</h1>
+        <p><i>"I hope to make more memories with you!"</i></p>
+    </header>
+
+    <div class="timeline">
+        
+        <div class="container left newyear">
+            <a href="newyear.html" class="content">
+                <span class="date">JANUARY 1, 2026</span>
+                <h2>New Year's Eve</h2>
+                <p>The start of the year. The start of "US".</p>
+            </a>
+        </div>
+
+        <div class="container right valentines">
+            <a href="valentines.html" class="content">
+                <span class="date">FEBRUARY 14, 2026</span>
+                <h2>Valentine's Day</h2>
+                <p>Cutesy Valentine's Card.</p>
+                <p>(I wanted to write you pero dito nalang).</p>
+            </a>
+        </div>
+
+        <div class="container left future">
+            <div class="content locked">
+                <span class="date">FUTURE...</span>
+                <h2>To Be Continued</h2>
+                <p>I hope to make more memories with you babe :>.</p>
+                <img>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Simple JS to create stars
+        const starsContainer = document.getElementById('stars');
+        const starCount = 100;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.style.position = 'absolute';
+            star.style.width = Math.random() * 2 + 'px';
+            star.style.height = star.style.width;
+            star.style.background = 'white';
+            star.style.opacity = Math.random();
+            star.style.top = Math.random() * 100 + '%';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.borderRadius = '50%';
+            star.style.animation = `twinkle ${Math.random() * 3 + 2}s infinite`;
+            starsContainer.appendChild(star);
+        }
+
+        // Inject keyframes for twinkling
+        const styleSheet = document.createElement("style");
+        styleSheet.innerText = `
+            @keyframes twinkle {
+                0% { opacity: 0.2; }
+                50% { opacity: 1; }
+                100% { opacity: 0.2; }
+            }
+        `;
+        document.head.appendChild(styleSheet);
+    </script>
+</body>
+</html>
