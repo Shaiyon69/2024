@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Charle</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* --- RESET & BODY --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fce4ec; 
+            background-image: 
+                radial-gradient(#ffc1e3 2px, transparent 2px), 
+                radial-gradient(#ffc1e3 2px, transparent 2px);
+            background-size: 50px 50px;
+            background-position: 0 0, 25px 25px;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- STAGE 1: THE ENVELOPE --- */
+        .wrapper {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            cursor: pointer;
+            transition: transform 0.5s, opacity 0.5s;
+            z-index: 10;
+        }
+        
+        .wrapper:hover { transform: translateY(-5px); }
+        .wrapper.fade-out { opacity: 0; pointer-events: none; }
+
+        .envelope {
+            position: absolute;
+            width: 100%; height: 100%;
+            background: #ff4d6d;
+            border-radius: 5px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .flap {
+            position: absolute; top: 0; left: 0;
+            width: 0; height: 0; 
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 110px solid #ff758f;
+            transform-origin: top;
+            transition: transform 0.6s ease;
+            z-index: 5;
+        }
+
+        .pocket {
+            position: absolute; bottom: 0; left: 0;
+            width: 0; height: 0;
+            border-left: 150px solid #ff4d6d;
+            border-right: 150px solid #ff4d6d;
+            border-bottom: 100px solid #c9184a;
+            border-top: 100px solid transparent;
+            border-radius: 0 0 5px 5px;
+            z-index: 4;
+        }
+
+        .heart-seal {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 30px; color: #fff;
+            transition: opacity 0.4s;
+            z-index: 6;
+        }
+
+        .instruction {
+            position: absolute; top: 20%;
+            color: #d63384; font-size: 0.9rem;
+            letter-spacing: 2px;
+            animation: pulse 2s infinite;
+            transition: opacity 0.5s;
+        }
+        .instruction.hidden { opacity: 0; }
+
+        .wrapper.open .flap { transform: rotateX(180deg); z-index: 1; }
+        .wrapper.open .heart-seal { opacity: 0; }
+
+        /* --- STAGE 2: THE FULL LETTER (SCROLLABLE) --- */
+        .full-letter-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(5px);
+            z-index: 20;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease 0.5s; /* Delay to wait for envelope */
+        }
+
+        .full-letter-container.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .paper {
+            background: #fffdf7; /* Cream paper */
+            width: 90%;
+            max-width: 500px;
+            height: 80vh;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.2);
+            overflow-y: auto; /* SCROLLABLE */
+            position: relative;
+            transform: translateY(50px);
+            transition: transform 0.8s ease;
+            text-align: left;
+        }
+
+        .full-letter-container.show .paper {
+            transform: translateY(0);
+        }
+
+        /* --- LETTER CONTENT STYLES --- */
+        .paper h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #d63384;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .paper p {
+            font-family: 'Poppins', sans-serif;
+            color: #555;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        /* --- PHOTO PLACEHOLDERS --- */
+        .photo-section {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .photo-frame {
+            width: 130px;
+            height: 160px;
+            background: #f0f0f0;
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            text-align: center;
+            color: #888;
+            font-size: 0.75rem;
+            font-weight: 500;
+            position: relative;
+            transform: rotate(-2deg);
+            transition: transform 0.3s;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .photo-frame:nth-child(even) { transform: rotate(2deg); }
+        .photo-frame:hover { transform: scale(1.05) rotate(0); }
+
+        /* --- NAVIGATION --- */
+        .back-btn {
+            position: absolute;
+            bottom: 30px;
+            text-decoration: none;
+            color: #d63384;
+            font-size: 0.9rem;
+            border: 1px solid #d63384;
+            padding: 8px 20px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.8);
+            z-index: 5;
+        }
+
+        /* Scrollbar styling */
+        .paper::-webkit-scrollbar { width: 6px; }
+        .paper::-webkit-scrollbar-thumb { background: #ffb6c1; border-radius: 10px; }
+
+        @keyframes pulse { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
+    </style>
+</head>
+<body>
+
+    <div class="instruction">Hi Ganda!</div>
+
+    <audio id="music" loop>
+        <source src="songs/gluesong.mp3" type="audio/mp3">
+    </audio>
+
+    <div class="wrapper" onclick="openEnvelope()">
+        <div class="envelope">
+            <div class="flap"><div class="heart-seal">❤</div></div>
+            <div class="pocket"></div>
+        </div>
+    </div>
+
+    <div class="full-letter-container" id="letter-view">
+        <div class="paper">
+            
+            <h1>Happy Valentine's</h1>
+            
+            <p>Hi Charle,</p>
+            
+            <p>
+                I know this is a bit sudden, or maybe a bit extra (knowing me, definitely extra haha, sana di mabawasan AURA ko), 
+                but I wanted to write something proper for today. So take your time enjoy the song (if it does play🫣) while you read my heart. 
+            </p>
+            
+            <p>
+                Hi babe, Happy Valentine's! WAWWW hehehe. Hello bibi I just wanted to write you this letter
+                because well I want to write my feelings. It has been an honor being your babe, BABE?! AHHDAHDH
+                I want to thank you for choosing me, even though I'm weird and probably have hobbies that do not
+                even align well with yours, interests that differs from yours, kaya it surprises me whenever you like
+                something I like and sinasamahan mo pa ako. Thank you for trying to explore things with me even though
+                it might be too much for you. I just want you to know how much I adore and cherish you my babe. Iba talaga kapag baliw
+                sa pag-ibig may pa ganito-ganito. Babe, I'm deeply in love with you. Alam ko na parang nonchalant lang AKO
+                and para bang diko masyado naipapakita pero sana na ipaparamdam ko. I like you (HALA RISKY TEXT AHDAHDHA).
+
+            <p>
+                I really appreciate you, not just for the way you make me feel special, but for simply being you.
+                I like you, Charle. And I hope this year treats us well.
+            </p>
+
+            <p>
+                Anyway, I noticed we don't really have photos together...
+            </p>
+
+            <div class="photo-section">
+                
+                <div class="photo-frame">
+                    Maybe you wanna take pics together?
+                </div>
+
+                <div class="photo-frame">
+                     CHANCE MO NA 'TO >:) 
+                </div>
+
+            </div>
+
+            <p style="text-align: center; margin-top: 30px; color: #d63384;">
+                Happy Valentine's Day! 🌹<br>
+                - Pao
+            </p>
+            
+            <br><br>
+            <div style="text-align: center;">
+                <!-- ← Back to Timeline -->
+                <a href="index.html" style="color: #bbb; text-decoration: none; font-size: 0.8rem;"></a>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function openEnvelope() {
+            const wrapper = document.querySelector('.wrapper');
+            const instruction = document.querySelector('.instruction');
+            const letterView = document.getElementById('letter-view');
+            const music = document.getElementById('music');
+
+            if (!wrapper.classList.contains('open')) {
+                // 1. Open Envelope
+                wrapper.classList.add('open');
+                instruction.classList.add('hidden');
+
+                // 2. Play Music
+                music.volume = 0.3;
+                music.play().catch(e => console.log("Audio needed user interaction"));
+
+                // 3. Wait 0.6s, then Fade Out Envelope & Show Letter
+                setTimeout(() => {
+                    wrapper.classList.add('fade-out');
+                    letterView.classList.add('show');
+                }, 800);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -3,293 +3,761 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Charle</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>For my Beloved Queen</title>
     <style>
-        /* --- RESET & BODY --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        :root {
+            --bg-color: #1a001a;
+            --box-color: #900000;
+            --box-dark: #600000;
+            --accent-color: #ffd700;
+            --accent-dark: #b8860b;
+            --pattern-color: rgba(255, 215, 0, 0.05);
+            --wood-light: #8b4513;
+            --wood-dark: #654321;
+            --metal-light: #c0c0c0;
+            --metal-dark: #707070;
+            --jester-image: url('https://m.media-amazon.com/images/I/31KA7lrVu8L.jpg');
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
         body {
-            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #fce4ec; 
+            min-height: 100vh;
+            margin: 0;
+            background-color: var(--bg-color);
             background-image: 
-                radial-gradient(#ffc1e3 2px, transparent 2px), 
-                radial-gradient(#ffc1e3 2px, transparent 2px);
-            background-size: 50px 50px;
-            background-position: 0 0, 25px 25px;
+                radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 60%),
+                linear-gradient(135deg, var(--pattern-color) 25%, transparent 25%), 
+                linear-gradient(225deg, var(--pattern-color) 25%, transparent 25%), 
+                linear-gradient(45deg, var(--pattern-color) 25%, transparent 25%), 
+                linear-gradient(315deg, var(--pattern-color) 25%, transparent 25%);
+            background-size: 100% 100%, 60px 60px, 60px 60px, 60px 60px, 60px 60px;
+            font-family: 'Georgia', serif;
             overflow: hidden;
-            font-family: 'Poppins', sans-serif;
+            color: white;
+            perspective: 1200px;
         }
 
-        /* --- STAGE 1: THE ENVELOPE --- */
-        .wrapper {
+        .container {
+            text-align: center;
             position: relative;
-            width: 300px;
-            height: 200px;
-            cursor: pointer;
-            transition: transform 0.5s, opacity 0.5s;
+            max-width: 600px;
+            padding: 20px;
             z-index: 10;
         }
-        
-        .wrapper:hover { transform: translateY(-5px); }
-        .wrapper.fade-out { opacity: 0; pointer-events: none; }
 
-        .envelope {
-            position: absolute;
-            width: 100%; height: 100%;
-            background: #ff4d6d;
-            border-radius: 5px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        .flap {
-            position: absolute; top: 0; left: 0;
-            width: 0; height: 0; 
-            border-left: 150px solid transparent;
-            border-right: 150px solid transparent;
-            border-top: 110px solid #ff758f;
-            transform-origin: top;
-            transition: transform 0.6s ease;
-            z-index: 5;
-        }
-
-        .pocket {
-            position: absolute; bottom: 0; left: 0;
-            width: 0; height: 0;
-            border-left: 150px solid #ff4d6d;
-            border-right: 150px solid #ff4d6d;
-            border-bottom: 100px solid #c9184a;
-            border-top: 100px solid transparent;
-            border-radius: 0 0 5px 5px;
-            z-index: 4;
-        }
-
-        .heart-seal {
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 30px; color: #fff;
-            transition: opacity 0.4s;
-            z-index: 6;
-        }
-
-        .instruction {
-            position: absolute; top: 20%;
-            color: #d63384; font-size: 0.9rem;
+        .header {
+            font-size: 1.8rem;
+            margin-bottom: 60px;
+            color: var(--accent-color);
             letter-spacing: 2px;
-            animation: pulse 2s infinite;
-            transition: opacity 0.5s;
+            text-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            font-style: italic;
         }
-        .instruction.hidden { opacity: 0; }
 
-        .wrapper.open .flap { transform: rotateX(180deg); z-index: 1; }
-        .wrapper.open .heart-seal { opacity: 0; }
+        .jester-box-container {
+            width: 280px;
+            height: 280px;
+            position: relative;
+            margin: 0 auto;
+            transform-style: preserve-3d;
+            transform: rotateX(-8deg) rotateY(5deg);
+            transition: transform 0.3s ease;
+        }
 
-        /* --- STAGE 2: THE FULL LETTER (SCROLLABLE) --- */
-        .full-letter-container {
+        .winding-shake {
+            animation: realisticShake 0.15s infinite;
+        }
+
+        @keyframes realisticShake {
+            0%, 100% { transform: rotateX(-8deg) rotateY(5deg) translateY(0); }
+            25% { transform: rotateX(-8deg) rotateY(5deg) translateY(-2px) rotate(0.5deg); }
+            75% { transform: rotateX(-8deg) rotateY(5deg) translateY(-1px) rotate(-0.5deg); }
+        }
+
+        .box-interior {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: 
+                linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.1) 50%, transparent 100%),
+                repeating-linear-gradient(90deg, 
+                    var(--wood-dark) 0px, 
+                    var(--wood-light) 2px, 
+                    var(--wood-dark) 4px,
+                    #5a3a1a 6px,
+                    var(--wood-dark) 8px
+                );
+            border: 3px solid #3d2817;
+            border-radius: 4px;
+            box-shadow: 
+                inset 0 0 30px rgba(0,0,0,0.6),
+                inset 0 -20px 40px rgba(0,0,0,0.4),
+                0 10px 30px rgba(0,0,0,0.5);
+            z-index: 1;
+        }
+
+        .jester {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            z-index: 2;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+        }
+
+        .jester-head {
+            width: 140px;
+            height: 140px;
+            background-image: var(--jester-image);
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            border: 4px solid var(--accent-color);
+            box-shadow: 
+                0 8px 20px rgba(0,0,0,0.6),
+                inset -5px -5px 15px rgba(0,0,0,0.2),
+                inset 5px 5px 15px rgba(255,255,255,0.2);
+            position: relative;
+            z-index: 2;
+        }
+
+        .jester-collar {
+            width: 80px;
+            height: 20px;
+            background: linear-gradient(to bottom, var(--accent-color), var(--accent-dark));
+            clip-path: polygon(0 0, 100% 0, 80% 100%, 50% 60%, 20% 100%);
+            margin-top: -5px;
+            z-index: 1;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .jester-spring {
+            width: 30px;
+            height: 12px;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    var(--metal-light) 0px,
+                    var(--metal-dark) 1px,
+                    #909090 2px,
+                    var(--metal-light) 3px
+                );
+            border-left: 3px solid var(--metal-dark);
+            border-right: 3px solid var(--metal-dark);
+            border-radius: 2px;
+            box-shadow: 
+                inset 0 1px 3px rgba(255,255,255,0.5),
+                inset 0 -1px 3px rgba(0,0,0,0.5),
+                0 2px 5px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .jester-spring::before,
+        .jester-spring::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: radial-gradient(ellipse, var(--metal-light), transparent);
+            left: 0;
+        }
+        .jester-spring::before { top: 0; }
+        .jester-spring::after { bottom: 0; }
+
+        .box-front {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: 
+                linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 20%, rgba(0,0,0,0.2) 100%),
+                repeating-linear-gradient(90deg, 
+                    var(--box-dark) 0px,
+                    var(--box-color) 3px,
+                    #750000 6px,
+                    var(--box-dark) 9px
+                ),
+                linear-gradient(135deg, var(--box-color), var(--box-dark));
+            border: 4px solid var(--wood-dark);
+            border-radius: 4px;
+            z-index: 3;
+            box-shadow: 
+                inset 0 2px 0 rgba(255, 215, 0, 0.3),
+                inset 0 -2px 5px rgba(0,0,0,0.5),
+                0 15px 40px rgba(0,0,0,0.6);
+        }
+
+        .box-front::before {
+            content: '';
+            position: absolute;
+            top: 8px; left: 8px; right: 8px; bottom: 8px;
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            border-radius: 2px;
+            pointer-events: none;
+        }
+
+        .box-front::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 50px;
+            background: 
+                linear-gradient(180deg, var(--metal-light), var(--metal-dark));
+            border-radius: 4px;
+            box-shadow: 
+                inset 0 2px 4px rgba(255,255,255,0.5),
+                inset 0 -2px 4px rgba(0,0,0,0.5),
+                0 4px 8px rgba(0,0,0,0.4);
+        }
+
+        .lid {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: 
+                linear-gradient(180deg, rgba(255,255,255,0.2) 0%, transparent 30%, rgba(0,0,0,0.3) 100%),
+                repeating-linear-gradient(90deg, 
+                    #a00000 0px,
+                    #b30000 3px,
+                    #900000 6px,
+                    #a00000 9px
+                );
+            border: 4px solid var(--wood-dark);
+            border-bottom: none;
+            border-radius: 4px 4px 0 0;
+            transform-origin: bottom left;
+            z-index: 4;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 
+                inset 0 3px 0 rgba(255, 215, 0, 0.3),
+                0 -5px 15px rgba(0,0,0,0.4),
+                0 5px 10px rgba(0,0,0,0.3);
+        }
+
+        .lid::before {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 80%;
+            background: linear-gradient(90deg, var(--metal-dark), var(--metal-light), var(--metal-dark));
+            border-radius: 2px;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .lid::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            bottom: 20%;
+            width: 15px;
+            height: 3px;
+            background: #333;
+            border-radius: 50%;
+            box-shadow: 0 6px 0 #333;
+        }
+
+        .crank-wrapper {
+            position: absolute;
+            right: -60px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 90px;
+            z-index: 5;
+            cursor: pointer;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.4));
+        }
+
+        .crank-shaft {
+            position: absolute;
+            left: 0; top: 50%;
+            width: 25px; height: 10px;
+            background: 
+                linear-gradient(to bottom, 
+                    var(--metal-light), 
+                    var(--metal-dark) 50%, 
+                    var(--metal-light));
+            transform: translateY(-50%);
+            border-radius: 1px;
+            box-shadow: 
+                inset 0 2px 3px rgba(255,255,255,0.6),
+                inset 0 -2px 3px rgba(0,0,0,0.6),
+                0 3px 6px rgba(0,0,0,0.3);
+        }
+
+        .crank-shaft::before {
+            content: '';
+            position: absolute;
+            right: -3px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 14px;
+            background: var(--metal-dark);
+            border-radius: 1px;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .crank-handle-container {
+            position: absolute;
+            left: 18px; top: 0;
+            width: 42px; height: 90px;
+            transform-origin: center center;
+        }
+
+        .crank-arm {
+            position: absolute;
+            left: 50%; top: 0;
+            width: 10px; height: 100%;
+            background: 
+                linear-gradient(to right, 
+                    var(--metal-dark), 
+                    var(--metal-light) 30%, 
+                    var(--metal-dark) 70%, 
+                    var(--metal-light));
+            transform: translateX(-50%);
+            border-radius: 5px;
+            box-shadow: 
+                inset 2px 0 3px rgba(255,255,255,0.4),
+                inset -2px 0 3px rgba(0,0,0,0.4),
+                3px 0 8px rgba(0,0,0,0.3);
+        }
+
+        .crank-knob {
+            position: absolute;
+            bottom: -8px; left: 50%;
+            width: 28px; height: 28px;
+            background: 
+                radial-gradient(circle at 35% 35%, 
+                    var(--accent-color), 
+                    var(--accent-dark) 60%, 
+                    #8b7355);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            box-shadow: 
+                0 5px 10px rgba(0,0,0,0.4),
+                inset 0 2px 4px rgba(255,255,255,0.3),
+                inset 0 -2px 4px rgba(0,0,0,0.3);
+            border: 2px solid var(--wood-dark);
+        }
+
+        .crank-knob::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 4px;
+            height: 4px;
+            background: #333;
+            border-radius: 50%;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .spinning {
+            animation: spinCrank 0.25s linear infinite;
+        }
+
+        @keyframes spinCrank {
+            100% { transform: rotateX(360deg); }
+        }
+
+        /* Pop animations */
+        .box-open .lid {
+            transform: rotate(-140deg);
+        }
+
+        .box-open .jester-spring {
+            animation: springPop 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation-delay: 0.15s;
+        }
+
+        @keyframes springPop {
+            0% { height: 12px; }
+            40% { height: 230px; }
+            60% { height: 170px; }
+            80% { height: 200px; }
+            100% { height: 190px; }
+        }
+
+        .interaction-area {
+            margin-top: 70px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .instruction-text {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .progress-bar-container {
+            width: 250px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255,215,0,0.3);
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #ffd700, #ff8c00);
+            transition: width 0.1s linear;
+        }
+
+        /* Letter styles */
+        .letter-scroll {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0) rotate(-5deg);
+            width: 90%;
+            max-width: 550px;
+            background: #fdfcf1;
+            background-image: linear-gradient(rgba(201, 165, 106, 0.1) 1px, transparent 1px);
+            background-size: 100% 30px;
+            padding: 60px 40px 50px 40px; 
+            border: 8px solid #3e2723;
+            border-radius: 4px;
+            box-shadow: 0 0 0 2px var(--accent-color) inset, 0 25px 50px rgba(0,0,0,0.9);
+            z-index: 100;
+            opacity: 0;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.2s, opacity 0.4s ease-out 1.2s;
+            color: #3e2723;
+            pointer-events: none; /* Prevent clicking when hidden */
+        }
+
+        .letter-scroll-open {
+            transform: translate(-50%, -50%) scale(1) rotate(0deg);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .letter-jester {
+            width: 90px;
+            height: 90px;
+            background-image: var(--jester-image);
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            border: 4px solid var(--accent-color);
+            position: absolute;
+            top: -50px; 
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            z-index: 101; 
+        }
+
+        .main-question {
+            font-size: 2.2rem;
+            color: #900000;
+            margin-bottom: 25px;
+            text-align: center;
+            font-style: italic;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 15px;
+            position: relative;
+        }
+
+        .letter-body {
+            line-height: 1.8;
+            font-size: 1.15rem;
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+
+        .closing {
+            text-align: right;
+            font-style: italic;
+            font-weight: bold;
+            color: #700000;
+        }
+
+        /* Elegant Close Button */
+        .close-btn {
+            display: block;
+            margin: 40px auto 0 auto;
+            padding: 10px 30px;
+            background: transparent;
+            border: 1px solid var(--accent-color);
+            color: #900000;
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .close-btn:hover {
+            background: rgba(201, 165, 106, 0.1);
+            color: #600000;
+        }
+
+        #confetti {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(5px);
-            z-index: 20;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
             pointer-events: none;
-            transition: opacity 0.8s ease 0.5s; /* Delay to wait for envelope */
+            z-index: 99;
+            display: none;
         }
-
-        .full-letter-container.show {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .paper {
-            background: #fffdf7; /* Cream paper */
-            width: 90%;
-            max-width: 500px;
-            height: 80vh;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 30px rgba(0,0,0,0.2);
-            overflow-y: auto; /* SCROLLABLE */
-            position: relative;
-            transform: translateY(50px);
-            transition: transform 0.8s ease;
-            text-align: left;
-        }
-
-        .full-letter-container.show .paper {
-            transform: translateY(0);
-        }
-
-        /* --- LETTER CONTENT STYLES --- */
-        .paper h1 {
-            font-family: 'Dancing Script', cursive;
-            color: #d63384;
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .paper p {
-            font-family: 'Poppins', sans-serif;
-            color: #555;
-            font-size: 1rem;
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-
-        /* --- PHOTO PLACEHOLDERS --- */
-        .photo-section {
-            margin-top: 30px;
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .photo-frame {
-            width: 130px;
-            height: 160px;
-            background: #f0f0f0;
-            border: 2px dashed #ccc;
-            border-radius: 5px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
-            text-align: center;
-            color: #888;
-            font-size: 0.75rem;
-            font-weight: 500;
-            position: relative;
-            transform: rotate(-2deg);
-            transition: transform 0.3s;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
-        }
-
-        .photo-frame:nth-child(even) { transform: rotate(2deg); }
-        .photo-frame:hover { transform: scale(1.05) rotate(0); }
-
-        /* --- NAVIGATION --- */
-        .back-btn {
-            position: absolute;
-            bottom: 30px;
-            text-decoration: none;
-            color: #d63384;
-            font-size: 0.9rem;
-            border: 1px solid #d63384;
-            padding: 8px 20px;
-            border-radius: 20px;
-            background: rgba(255,255,255,0.8);
-            z-index: 5;
-        }
-
-        /* Scrollbar styling */
-        .paper::-webkit-scrollbar { width: 6px; }
-        .paper::-webkit-scrollbar-thumb { background: #ffb6c1; border-radius: 10px; }
-
-        @keyframes pulse { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
     </style>
 </head>
 <body>
 
-    <div class="instruction">Hi Ganda!</div>
+    <audio id="surpriseMusic" src="songs/secretdoor.mp3" preload="auto"></audio>
 
-    <audio id="music" loop>
-        <source src="songs/gluesong.mp3" type="audio/mp3">
-    </audio>
+    <canvas id="confetti"></canvas>
 
-    <div class="wrapper" onclick="openEnvelope()">
-        <div class="envelope">
-            <div class="flap"><div class="heart-seal">❤</div></div>
-            <div class="pocket"></div>
+    <div class="container" id="mainContent">
+        <div class="header">For My Beloved Queen, on April 1st</div>
+        
+        <div class="jester-box-container" id="boxContainer">
+            <div class="box-interior"></div>
+            
+            <div class="jester">
+                <div class="jester-head"></div>
+                <div class="jester-collar"></div>
+                <div class="jester-spring"></div>
+            </div>
+
+            <div class="box-front"></div>
+            <div class="lid"></div>
+            
+            <div class="crank-wrapper" id="crankArea">
+                <div class="crank-shaft"></div>
+                <div class="crank-handle-container" id="crankHandle">
+                    <div class="crank-arm"></div>
+                    <div class="crank-knob"></div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="full-letter-container" id="letter-view">
-        <div class="paper">
-            
-            <h1>Happy Valentine's</h1>
-            
-            <p>Hi Charle,</p>
-            
-            <p>
-                I know this is a bit sudden, or maybe a bit extra (knowing me, definitely extra haha, sana di mabawasan AURA ko), 
-                but I wanted to write something proper for today. So take your time enjoy the song (if it does play🫣) while you read my heart. 
-            </p>
-            
-            <p>
-                Hi babe, Happy Valentine's! WAWWW hehehe. Hello bibi I just wanted to write you this letter
-                because well I want to write my feelings. It has been an honor being your babe, BABE?! AHHDAHDH
-                I want to thank you for choosing me, even though I'm weird and probably have hobbies that do not
-                even align well with yours, interests that differs from yours, kaya it surprises me whenever you like
-                something I like and sinasamahan mo pa ako. Thank you for trying to explore things with me even though
-                it might be too much for you. I just want you to know how much I adore and cherish you my babe. Iba talaga kapag baliw
-                sa pag-ibig may pa ganito-ganito. Babe, I'm deeply in love with you. Alam ko na parang nonchalant lang AKO
-                and para bang diko masyado naipapakita pero sana na ipaparamdam ko. I like you (HALA RISKY TEXT AHDAHDHA).
-
-            <p>
-                I really appreciate you, not just for the way you make me feel special, but for simply being you.
-                I like you, Charle. And I hope this year treats us well.
-            </p>
-
-            <p>
-                Anyway, I noticed we don't really have photos together...
-            </p>
-
-            <div class="photo-section">
-                
-                <div class="photo-frame">
-                    Maybe you wanna take pics together?
-                </div>
-
-                <div class="photo-frame">
-                     CHANCE MO NA 'TO >:) 
-                </div>
-
+        <div class="interaction-area" id="interactionArea">
+            <div class="instruction-text" id="instructionText">Press & Hold the Crank</div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
             </div>
+        </div>
 
-            <p style="text-align: center; margin-top: 30px; color: #d63384;">
-                Happy Valentine's Day! 🌹<br>
-                - Pao
-            </p>
-            
-            <br><br>
-            <div style="text-align: center;">
-                <!-- ← Back to Timeline -->
-                <a href="index.html" style="color: #bbb; text-decoration: none; font-size: 0.8rem;"></a>
+        <div class="letter-scroll" id="letterScroll">
+            <div class="letter-jester"></div>
+
+            <div class="main-question">CAN I BE YOUR FOOL TODAY?</div>
+            <div class="letter-body">
+                "May I be your fool today?"<br><br>
+                May I have the chance today to be your jester my queen to tell you the joy of how much I love you. To tell you that I am a fool for you. Since it's april first most people would just say APRIL FOOLS pero this time gusto ko maiba. Gusto ko na ibigay ang araw na ito sayo at ang sulat na 'to. Bebe I love you and it feels like I'm such a fool for loving you. A fool in a way that I'd walk out the fun of a parade just to be with you, to have the selfishness of even taking you away from such circus show just so we can be together.<br><br>
+                Bebe I wish to be the fool that will love you blindly to the end.
             </div>
-
+            <div class="closing">
+                "Happy April First, Cheers to you my beloved queen,<br>
+                for the love I have been given"
+            </div>
+            
+            <button class="close-btn" id="closeBtn">Return Car To Box</button>
         </div>
     </div>
 
     <script>
-        function openEnvelope() {
-            const wrapper = document.querySelector('.wrapper');
-            const instruction = document.querySelector('.instruction');
-            const letterView = document.getElementById('letter-view');
-            const music = document.getElementById('music');
+        const crankArea = document.getElementById('crankArea');
+        const crankHandle = document.getElementById('crankHandle');
+        const progressBar = document.getElementById('progressBar');
+        const instructionText = document.getElementById('instructionText');
+        const boxContainer = document.getElementById('boxContainer');
+        const interactionArea = document.getElementById('interactionArea');
+        const letter = document.getElementById('letterScroll');
+        const closeBtn = document.getElementById('closeBtn');
+        const backgroundMusic = document.getElementById('surpriseMusic');
+        
+        let holdInterval;
+        let audioInterval;
+        let progress = 0;
+        const maxProgress = 100;
+        const targetVolume = 0.35; // Subtle, romantic volume level
+        let isPopped = false;
 
-            if (!wrapper.classList.contains('open')) {
-                // 1. Open Envelope
-                wrapper.classList.add('open');
-                instruction.classList.add('hidden');
+        // AUDIO FADE FUNCTIONS
+        function fadeInAudio() {
+            clearInterval(audioInterval);
+            backgroundMusic.volume = 0;
+            backgroundMusic.play().catch(e => console.log("Audio play blocked:", e));
+            
+            audioInterval = setInterval(() => {
+                if (backgroundMusic.volume < targetVolume) {
+                    backgroundMusic.volume = Math.min(targetVolume, backgroundMusic.volume + 0.02);
+                } else {
+                    clearInterval(audioInterval);
+                }
+            }, 100); // Fades in smoothly over about 1.5 - 2 seconds
+        }
 
-                // 2. Play Music
-                music.volume = 0.3;
-                music.play().catch(e => console.log("Audio needed user interaction"));
+        function fadeOutAudio() {
+            clearInterval(audioInterval);
+            audioInterval = setInterval(() => {
+                if (backgroundMusic.volume > 0.02) {
+                    backgroundMusic.volume -= 0.02;
+                } else {
+                    backgroundMusic.volume = 0;
+                    backgroundMusic.pause();
+                    backgroundMusic.currentTime = 0; // Reset song to beginning
+                    clearInterval(audioInterval);
+                }
+            }, 100); // Fades out smoothly
+        }
 
-                // 3. Wait 0.6s, then Fade Out Envelope & Show Letter
-                setTimeout(() => {
-                    wrapper.classList.add('fade-out');
-                    letterView.classList.add('show');
-                }, 800);
+        // BOX MECHANICS
+        const startWinding = (e) => {
+            if (isPopped) return;
+            e.preventDefault(); 
+            
+            crankHandle.classList.add('spinning');
+            boxContainer.classList.add('winding-shake');
+            instructionText.innerText = "Keep Holding...";
+            instructionText.style.color = "#ff8c00";
+
+            clearInterval(holdInterval);
+            holdInterval = setInterval(() => {
+                progress += 1.5;
+                progressBar.style.width = `${progress}%`;
+
+                if (progress >= maxProgress) {
+                    triggerPop();
+                }
+            }, 50);
+        };
+
+        const stopWinding = () => {
+            if (isPopped) return;
+            
+            clearInterval(holdInterval);
+            crankHandle.classList.remove('spinning');
+            boxContainer.classList.remove('winding-shake');
+            
+            let unwindInterval = setInterval(() => {
+                progress -= 4; 
+                if (progress <= 0) {
+                    progress = 0;
+                    clearInterval(unwindInterval);
+                    instructionText.innerText = "Press & Hold the Crank";
+                    instructionText.style.color = "var(--accent-color)";
+                }
+                progressBar.style.width = `${progress}%`;
+            }, 20);
+        };
+
+        const triggerPop = () => {
+            isPopped = true;
+            clearInterval(holdInterval);
+            
+            crankHandle.classList.remove('spinning');
+            boxContainer.classList.remove('winding-shake');
+            interactionArea.style.opacity = '0';
+            interactionArea.style.pointerEvents = 'none';
+            
+            boxContainer.classList.add('box-open');
+            createConfetti();
+            
+            setTimeout(() => {
+                letter.classList.add('letter-scroll-open');
+                fadeInAudio(); // Trigger the subtle audio fade-in
+            }, 100);
+        };
+
+        // RESET MECHANICS
+        closeBtn.addEventListener('click', () => {
+            letter.classList.remove('letter-scroll-open');
+            boxContainer.classList.remove('box-open');
+            
+            // Fade out the audio
+            fadeOutAudio();
+            
+            // Reset the UI after the box closes
+            setTimeout(() => {
+                isPopped = false;
+                progress = 0;
+                progressBar.style.width = '0%';
+                instructionText.innerText = "Press & Hold the Crank";
+                instructionText.style.color = "var(--accent-color)";
+                interactionArea.style.opacity = '1';
+                interactionArea.style.pointerEvents = 'auto';
+            }, 800); 
+        });
+
+        crankArea.addEventListener('mousedown', startWinding);
+        crankArea.addEventListener('touchstart', startWinding, {passive: false});
+
+        window.addEventListener('mouseup', stopWinding);
+        window.addEventListener('touchend', stopWinding);
+        
+        // CONFETTI
+        function createConfetti() {
+            const canvas = document.getElementById('confetti');
+            const ctx = canvas.getContext('2d');
+            canvas.style.display = 'block';
+            canvas.style.opacity = '1';
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const colors = ['#ffd700', '#ff0000', '#ffffff', '#8b008b'];
+
+            for(let i=0; i<120; i++) {
+                particles.push({
+                    x: window.innerWidth / 2,
+                    y: window.innerHeight / 2 + 100,
+                    r: Math.random() * 6 + 2,
+                    dx: Math.random() * 15 - 7.5,
+                    dy: Math.random() * -15 - 5,
+                    color: colors[Math.floor(Math.random() * colors.length)]
+                });
             }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color;
+                    ctx.fill();
+                    p.x += p.dx;
+                    p.y += p.dy;
+                    p.dy += 0.3;
+                });
+            }
+            animate();
+            
+            setTimeout(() => {
+                canvas.style.opacity = '0';
+                canvas.style.transition = 'opacity 2s';
+                setTimeout(() => canvas.style.display = 'none', 2000);
+            }, 2500);
         }
     </script>
 </body>
