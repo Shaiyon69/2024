@@ -90,6 +90,7 @@
         .container:nth-child(1) { animation-delay: 0.2s; }
         .container:nth-child(2) { animation-delay: 0.4s; }
         .container:nth-child(3) { animation-delay: 0.6s; }
+        .container:nth-child(4) { animation-delay: 0.8s; }
 
         .left { left: 0; }
         .right { left: 50%; }
@@ -115,7 +116,8 @@
         /* Colors */
         .left.newyear::after { border-color: #4facfe; box-shadow: 0 0 15px #4facfe; }
         .right.valentines::after { border-color: #ff9a9e; box-shadow: 0 0 15px #ff9a9e; }
-        .left.future::after { border-color: #555; }
+        .left.birthday::after { border-color: #ffd700; box-shadow: 0 0 15px #ffd700; }
+        .right.future::after { border-color: #555; }
 
         /* --- THE CARD --- */
         .content {
@@ -245,7 +247,15 @@
             </a>
         </div>
 
-        <div class="container left future">
+        <div class="container left birthday">
+            <a href="birthday.html" class="content">
+                <span class="date">SEPTEMBER 12, 2026</span>
+                <h2>Charle's Birthday</h2>
+                <p>Yung araw na pinanganak ang paborito kong tao.</p>
+            </a>
+        </div>
+
+        <div class="container right future">
             <div class="content locked">
                 <span class="date">FUTURE...</span>
                 <h2>To Be Continued</h2>
